@@ -17,4 +17,9 @@ class Event extends Model
         self::TYPE_CLOSED => 'Закрытое',
         self::TYPE_PLANED => 'Планируется',
     ];
+
+    public function stands()
+    {
+        return $this->hasMany(Stand::class, 'event_id');
+    }
 }

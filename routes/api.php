@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Admin\ApiController;
 use App\Http\Controllers\Api\PasswordResetController;
 
 /*
@@ -27,4 +28,8 @@ Route::post('password-reset', [PasswordResetController::class, 'reset']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('change/password', [UserController::class, 'changePassword']);
     Route::any('details', [UserController::class, 'details']);
+});
+
+Route::group(['middleware' => 'web', 'prefix' => 'admin'], function() {
+    Route::get('stands-by-event', [ApiController::class, 'standsByEvent']);
 });

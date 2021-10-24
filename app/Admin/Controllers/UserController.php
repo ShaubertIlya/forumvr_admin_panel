@@ -10,6 +10,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\TariffPlan;
 
 class UserController extends AdminController
 {
@@ -135,7 +136,13 @@ class UserController extends AdminController
             $form->text('business_information.model3d_link', __('Model3D link'));
             $form->text('business_information.gallery_link', __('Gallery link'));
         })->tab('Event', function (Form $form) {
-            $form->multipleSelect('events', __('Event'))->options(Event::all()->pluck('project_name_ru', 'id'));
+            $form->hasMany('attached_events', 'Events',  function(Form\NestedForm $form) {
+                $form->select('event_id', 'Event')->options(Event::all()->pluck('project_name_ru', 'id')->toArray())->load('stand_id', '/api/admin/stands-by-event')->required();
+                $form->select('stand_id', 'Stand')->required()->use(function() {
+                    dd($this);
+                });
+                $form->select('tariff_id', 'Tariff')->options(TariffPlan::all()->pluck('tarifplan_name_ru', 'id')->toArray())->required();
+            });
         });
 
         return $form;
