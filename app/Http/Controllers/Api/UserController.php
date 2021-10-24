@@ -105,9 +105,9 @@ class UserController extends Controller
 
     public function userStands()
     {
-        $user = Auth::user();
+        $user = !empty($request->user_id) ? User::find($request->user_id) : Auth::user();
 
-        $attached = $user->attached_events;
+        $attached = $user->attached_events()->with(['event', 'tariff', 'stand'])->get();
 
         return response()->json($attached, 200);
     }

@@ -16,4 +16,19 @@ class AttachedUserEvent extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class, 'event_id');
+    }
+
+    public function tariff()
+    {
+        return $this->belongsTo(TariffPlan::class, 'tariff_id');
+    }
+
+    public function stand()
+    {
+        return $this->belongsTo(Stand::class, 'stand_id');
+    }
 }
