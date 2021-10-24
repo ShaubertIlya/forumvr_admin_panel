@@ -28,6 +28,7 @@ Route::post('password-reset', [PasswordResetController::class, 'reset']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('change/password', [UserController::class, 'changePassword']);
     Route::any('details', [UserController::class, 'details']);
+    Route::get('/user-stands', [UserController::class, 'userStands']);
 });
 
 Route::group(['middleware' => 'web', 'prefix' => 'admin'], function() {

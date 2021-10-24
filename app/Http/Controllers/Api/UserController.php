@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Validator;
+use App\AttachedUserEvent;
 
 class UserController extends Controller
 {
@@ -100,5 +101,14 @@ class UserController extends Controller
         $business_information = $user->business_information;
 
         return response()->json($user, $this->successStatus);
+    }
+
+    public function userStands()
+    {
+        $user = Auth::user();
+
+        $attached = $user->attached_events;
+
+        return response()->json($attached, 200);
     }
 }
