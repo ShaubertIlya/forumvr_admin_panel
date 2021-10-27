@@ -24,7 +24,7 @@ class UserController extends AdminController
      *
      * @var string
      */
-    protected $title = 'User';
+    protected $title = 'Пользователи форума';
 
     /**
      * Make a grid builder.
@@ -36,7 +36,7 @@ class UserController extends AdminController
         $grid = new Grid(new User());
 
         $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
+        $grid->column('name', __('Имя пользователя'));
         $grid->column('email', __('Email'));
 //        $grid->column('project_id', __('Project id'));
 //        $grid->column('business_information_id', __('Business information id'));
@@ -53,8 +53,8 @@ class UserController extends AdminController
 //        $grid->column('profile.description', __('Description'));
 //        $grid->column('profile.company_logo', __('Company logo'));
 
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Создано'));
+        $grid->column('updated_at', __('Обновлено'));
 
         return $grid;
     }
@@ -70,7 +70,7 @@ class UserController extends AdminController
         $show = new Show(User::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
+        $show->field('name', __('Имя пользователя'));
         $show->field('email', __('Email'));
 //        $show->field('user_projects', __('User projects'));
 //        $show->field('email_verified_at', __('Email verified at'));
@@ -95,8 +95,8 @@ class UserController extends AdminController
 
         // $show->field('password', __('Password'));
         // $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('created_at', __('Создано'));
+        $show->field('updated_at', __('Обновлено'));
 
         return $show;
     }
@@ -112,30 +112,30 @@ class UserController extends AdminController
 
         Form::extend('keyValue', KeyValue::class);
 
-        $form->tab('User Details', function (Form $form) {
-            $form->text('name', __('Name'))->required();
+        $form->tab('Информация пользователя', function (Form $form) {
+            $form->text('name', __('Имя пользователя'))->required();
             $form->email('email', __('Email'))->required();
             // $form->select('business_information_id', __('Business information id'))->options(BusinessInformation::all()->pluck('id','id'));
             // $form->text('user_projects', __('User projects'));
 //            $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-            $form->text('profile.company_name', __('Company name'))->required();
-            $form->text('profile.bin', __('Bin'))->rules('required|numeric|digits:12');
-            $form->text('profile.address', __('Address'))->required();
-            $form->mobile('profile.phone_number', __('Phone number'))->options(['mask' => '999 9999 9999'])->required();
-            $form->url('profile.website', __('Website'));
-            $form->textarea('profile.description', __('Description'));
-            $form->image('profile.company_logo', __('Company logo'));
-            $form->password('password', __('Password'));
+            $form->text('profile.company_name', __('Название компании'))->required();
+            $form->text('profile.bin', __('БИН'))->rules('required|numeric|digits:12');
+            $form->text('profile.address', __('Адрес'))->required();
+            $form->mobile('profile.phone_number', __('Номер телефона'))->options(['mask' => '999 9999 9999'])->required();
+            $form->url('profile.website', __('Вебсайт'));
+            $form->textarea('profile.description', __('Описание компании'));
+            $form->image('profile.company_logo', __('Логотип компании'));
+            $form->password('password', __('Пароль'));
             // $form->text('remember_token', __('Remember token'));
-        })->tab('Business Information', function (Form $form) {
-            $form->text('business_information.main_presentation_link', __('Main presentation link'));
-            $form->keyValue('business_information.additional_presentation_links', __('Additional presentation links'));
-            $form->keyValue('business_information.videoclip_links', __('Videoclip links'));
-            $form->keyValue('business_information.gallery_links', __('Gallery links'));
-            $form->text('business_information.company_visitcard', __('Company visitcard'));
-            $form->text('business_information.model3d_link', __('Model3D link'));
-            $form->text('business_information.gallery_link', __('Gallery link'));
-        })->tab('Event', function (Form $form) {
+        })->tab('Информация о компании', function (Form $form) {
+            $form->text('business_information.main_presentation_link', __('Ссылка на основную презентацию'));
+            $form->keyValue('business_information.additional_presentation_links', __('Ссылки на доп. презентации'));
+            $form->keyValue('business_information.videoclip_links', __('Ссылки на видеоклипы'));
+            $form->keyValue('business_information.gallery_links', __('Ссылки на галерею'));
+            $form->text('business_information.company_visitcard', __('Ссылка на визитку компании'));
+            $form->text('business_information.model3d_link', __('Ссылка на 3D модель стенда'));
+            $form->text('business_information.gallery_link', __('Ссылка на основную галерею'));
+        })->tab('Мероприятия и стенды', function (Form $form) {
             $form->hasMany('attached_events', 'Events',  function(Form\NestedForm $form) {
                 $form->select('event_id', 'Event')->options(Event::all()->pluck('project_name_ru', 'id')->toArray())->load('stand_id', '/api/admin/stands-by-event')->required();
                 $form->select('stand_id', 'Stand')->required();

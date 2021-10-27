@@ -19,7 +19,7 @@ class ForumParticipantController extends AdminController
      *
      * @var string
      */
-    protected $title = 'ForumParticipant';
+    protected $title = 'Участники форума';
 
     /**
      * Make a grid builder.

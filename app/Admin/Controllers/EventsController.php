@@ -15,7 +15,7 @@ class EventsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Event';
+    protected $title = 'Мероприятия';
 
     /**
      * Make a grid builder.

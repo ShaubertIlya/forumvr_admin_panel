@@ -15,7 +15,7 @@ class TariffPlanController extends AdminController
      *
      * @var string
      */
-    protected $title = 'TariffPlan';
+    protected $title = 'Тарифные планы';
 
     /**
      * Make a grid builder.
