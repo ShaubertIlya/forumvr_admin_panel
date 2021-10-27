@@ -9,6 +9,10 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Validator;
+use App\AttachedUserEvent;
+use App\Http\Requests\VisitorRegistrationRequest;
+use App\Visitor;
+use App\Services\VisitorService;
 
 class UserController extends Controller
 {
@@ -100,5 +104,34 @@ class UserController extends Controller
         $business_information = $user->business_information;
 
         return response()->json($user, $this->successStatus);
+    }
+
+    public function userStands()
+    {
+        $user = !empty($request->user_id) ? User::find($request->user_id) : Auth::user();
+
+        $attached = $user->attached_events()->with(['event', 'tariff', 'stand'])->get();
+
+        return response()->json($attached, 200);
+    }
+
+    public function visitorRegistration(VisitorRegistrationRequest $request)
+    {
+        $model = new Visitor();
+
+        $data = $request->all();
+
+        $service = new VisitorService($model, $data);
+
+        if($service->store())
+        {
+            return response()->json([
+                'message' => 'ok'
+            ], 200);
+        }
+
+        return response()->json([
+            'errors' => $service->errors()
+        ], 500);
     }
 }

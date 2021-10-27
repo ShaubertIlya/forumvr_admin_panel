@@ -22,4 +22,11 @@ class Event extends Model
     {
         return $this->hasMany(Stand::class, 'event_id');
     }
+
+    public function getNameAttribute()
+    {
+        $postfix = '_'. app()->getLocale();
+
+        return data_get($this, 'project_name'.$postfix);
+    }
 }

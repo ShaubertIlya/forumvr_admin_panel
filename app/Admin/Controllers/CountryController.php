@@ -15,7 +15,7 @@ class CountryController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Country';
+    protected $title = 'Страны';
 
     /**
      * Make a grid builder.

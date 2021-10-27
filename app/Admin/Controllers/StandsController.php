@@ -16,7 +16,7 @@ class StandsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Stand';
+    protected $title = 'Стенды';
 
     /**
      * Make a grid builder.

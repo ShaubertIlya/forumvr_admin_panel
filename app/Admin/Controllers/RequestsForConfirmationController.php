@@ -17,7 +17,7 @@ class RequestsForConfirmationController extends AdminController
      *
      * @var string
      */
-    protected $title = 'RequestForConfirmation';
+    protected $title = 'Заявки на подтверждение';
 
     /**
      * Make a grid builder.

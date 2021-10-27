@@ -15,7 +15,7 @@ class ForumManagerController extends AdminController
      *
      * @var string
      */
-    protected $title = 'ForumManager';
+    protected $title = 'Менеджеры форума';
 
     /**
      * Make a grid builder.
